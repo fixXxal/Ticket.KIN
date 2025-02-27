@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIN Ferry Service - Ticket</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid black;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            background-image: url('background.jpg');
+            background-size: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        .ticket-details {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .ticket-details p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .qr-code {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .terms {
+            font-size: 12px;
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+            color: #777;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            max-width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="KIN.jpg" alt="KIN Logo">
+    </div>
+    <div class="header">KIN Ferry Service - Boarding Ticket</div>
+    <div class="ticket-details">
+        <p><strong>Name:</strong> <span id="Name">John Doe</span></p>
+        <p><strong>ID Card:</strong> <span id="idCard">A123456</span></p>
+        <p><strong>Seat No.:</strong> <span id="seatNumber">12</span></p>
+        <p><strong>Trip Route:</strong> <span id="tripRoute">Male' - Maafushi</span></p>
+        <p><strong>Departure Time:</strong> <span id="departureTime">14:30 (25/02/2025)</span></p>
+        <p><strong>Price:</strong> <span id="price">1000 MVR</span></p>
+        <p><strong>Jetty:</strong> <span id="jetty">Male' Ferry Terminal</span></p>
+        <p><strong>Ticket Code:</strong> <span id="ticketCode">#1234567</span></p>
+    </div>
+    <div class="qr-code">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=JohnDoe-12" alt="QR Code">
+    </div>
+    <div class="terms">
+        <p><strong>Terms & Conditions:</strong></p>
+        <div class="language-icons" style="display: flex; justify-content: space-between;">
+            <img src="ENG.PNG" alt="English Language" style="width: 45%; height: auto; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <img src="DHI.PNG" alt="Dhivehi Language" style="width: 45%; height: auto; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        </div>
+        <p style="text-align: center; margin-top: 10px;">Thank you for choosing KIN Ferry Service</p>
+    </div>
+    <button id="viberBtn" style="display: block; margin: 20px auto; padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Send receipt and ticket to this contact on Viber (+960 9838281)
+    </button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const name = urlParams.get('name');
+            const seat = urlParams.get('seat');
+            const route = urlParams.get('route');
+            const departure = urlParams.get('departure');
+            const price = urlParams.get('price');
+            const jetty = urlParams.get('jetty');
+            const code = urlParams.get('code');
+            const idCard = urlParams.get('idCard');
+
+            if (name) document.getElementById('Name').textContent = name;
+            if (seat) document.getElementById('seatNumber').textContent = seat;
+            if (route) document.getElementById('tripRoute').textContent = route;
+            if (departure) document.getElementById('departureTime').textContent = departure;
+            if (price) document.getElementById('price').textContent = price;
+            if (jetty) document.getElementById('jetty').textContent = jetty;
+            if (idCard) document.getElementById('idCard').textContent = idCard;
+
+            // Display the unique ticket code
+            const ticketCode = code || `#${String(Date.now()).slice(-7)}`;
+            document.getElementById('ticketCode').textContent = ticketCode;
+
+            const qrData = `${window.location.origin}${window.location.pathname}?name=${encodeURIComponent(name)}&seat=${encodeURIComponent(seat)}&route=${encodeURIComponent(route)}&departure=${encodeURIComponent(departure)}&price=${encodeURIComponent(price)}&jetty=${encodeURIComponent(jetty)}&ticketCode=${encodeURIComponent(ticketCode)}`;
+            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrData)}`;
+            document.querySelector('.qr-code img').src = qrCodeUrl;
+
+            // Viber button functionality
+            document.getElementById('viberBtn').addEventListener('click', () => {
+                const viberUrl = `viber://chat?number=%2B9609838281`;
+                window.location.href = viberUrl;
+            });
+        });
+    </script>
+</body>
+</html>

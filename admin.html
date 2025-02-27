@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - KIN Ferry Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: #ffffff;
+        }
+        .header {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        .no-tickets {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: red;
+        }
+        .clear-button {
+            display: block;
+            margin: 20px auto;
+            padding: 5px 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .clear-button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Admin Panel</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Seat</th>
+                <th>Route</th>
+                <th>Departure</th>
+                <th>Jetty</th>
+                <th>Receipt</th>
+            </tr>
+        </thead>
+        <tbody id="ticketTableBody">
+            <!-- Ticket rows will be populated by JavaScript -->
+        </tbody>
+    </table>
+    <div class="no-tickets" id="noTickets">No tickets available.</div>
+    <button class="clear-button" id="clearTickets">Clear Tickets</button>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            const ticketTableBody = document.getElementById('ticketTableBody');
+            const noTickets = document.getElementById('noTickets');
+
+            if (tickets.length === 0) {
+                noTickets.style.display = 'block';
+            } else {
+                noTickets.style.display = 'none';
+                tickets.forEach(ticket => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${ticket.name}</td>
+                        <td>${ticket.phone}</td>
+                        <td>${ticket.seat}</td>
+                        <td>${ticket.route}</td>
+                        <td>${ticket.departure}</td>
+                        <td>${ticket.jetty}</td>
+                        <td><a href="${ticket.receipt}" target="_blank">View Receipt</a></td>
+                    `;
+                    ticketTableBody.appendChild(row);
+                });
+            }
+        });
+
+        document.getElementById('clearTickets').addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear all tickets? This action cannot be undone.')) {
+                localStorage.removeItem('tickets');
+                document.getElementById('ticketTableBody').innerHTML = '';
+                document.getElementById('noTickets').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

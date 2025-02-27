@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIN Ferry Service - Ticket Booking</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid black;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+        body:hover {
+            background-color: #f1f1f1;
+        }
+        .header {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .logo {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 100px;
+            animation: bounceIn 1s ease-in-out;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            animation: slideIn 0.5s ease-in-out;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+        input:focus, select:focus {
+            border-color: #4CAF50;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        .form-group input[type="file"] {
+            padding: 3px;
+        }
+        .feedback {
+            margin-top: 20px;
+            font-size: 14px;
+            color: red;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        .bank-details {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .bank-details p {
+            margin: 5px 0;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="KIN.jpg" alt="KIN Ferry Service Logo" class="logo">
+        Book a Ticket
+    </div>
+    <form id="bookingForm">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <div style="display: flex;">
+                <span style="padding: 10px; background-color: #eee; border: 1px solid #ccc; border-radius: 5px 0 0 5px;">+960</span>
+                <input type="tel" id="phone" name="phone" required pattern="[0-9]{7}" style="flex: 1; border-radius: 0 5px 5px 0;">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="idCard">ID Card Number:</label>
+            <input type="text" id="idCard" name="idCard" required>
+        </div>
+        <div class="form-group">
+            <label for="seat">Seat Number:</label>
+            <select id="seat" name="seat" required>
+                <!-- Options will be populated by JavaScript -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="route">Route:</label>
+            <select id="route" name="route" required>
+                <option value="Male - Gan">From Malé to Gan</option>
+                <option value="Gan - Male">From Gan to Malé</option>
+                <option value="Male - Fonadhoo">From Malé to Fonadhoo</option>
+                <option value="Fonadhoo - Male">From Fonadhoo to Malé</option>
+                <option value="Male - Maamendhoo">From Malé to Maamendhoo</option>
+                <option value="Maamendhoo - Male">From Maamendhoo to Malé</option>
+                <option value="Male - Isdhoo">From Malé to Isdhoo</option>
+                <option value="Isdhoo - Male">From Isdhoo to Malé</option>
+                <option value="Male - Kalaidhoo">From Malé to Kalaidhoo</option>
+                <option value="Kalaidhoo - Male">From Kalaidhoo to Malé</option>
+                <option value="Male - Maabaidhoo">From Malé to Maabaidhoo</option>
+                <option value="Maabaidhoo - Male">From Maabaidhoo to Malé</option>
+                <option value="Male - Dhanbidhoo">From Malé to Dhanbidhoo</option>
+                <option value="Dhanbidhoo - Male">From Dhanbidhoo to Malé</option>
+                <option value="Male - Kunahandhoo">From Malé to Kunahandhoo</option>
+                <option value="Kunahandhoo - Male">From Kunahandhoo to Malé</option>
+                <option value="Male - Maavah">From Malé to Maavah</option>
+                <option value="Maavah - Male">From Maavah to Malé</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="departure">Departure Time:</label>
+            <input type="datetime-local" id="departure" name="departure" required>
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price" value="1000 MVR" readonly>
+        </div>
+        <div class="form-group">
+            <label for="jetty">Jetty:</label>
+            <select id="jetty" name="jetty" required>
+                <option value="Gan Jetty">Gan Jetty</option>
+                <option value="Fonadhoo Jetty">Fonadhoo Jetty</option>
+                <option value="Maamendhoo Jetty">Maamendhoo Jetty</option>
+                <option value="Isdhoo Jetty">Isdhoo Jetty</option>
+                <option value="Kalaidhoo Jetty">Kalaidhoo Jetty</option>
+                <option value="Maabaidhoo Jetty">Maabaidhoo Jetty</option>
+                <option value="Dhanbidhoo Jetty">Dhanbidhoo Jetty</option>
+                <option value="Kunahandhoo Jetty">Kunahandhoo Jetty</option>
+                <option value="Maavah Jetty">Maavah Jetty</option>
+                <option value="Male' Jetty">Male' Jetty</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="receipt">Upload Receipt:</label>
+            <input type="file" id="receipt" name="receipt" accept="image/*" required>
+        </div>
+        <button type="submit">Submit</button>
+        <div class="feedback" id="feedback"></div>
+    </form>
+    <div class="bank-details">
+        <p><strong>Bank Transfer Details:</strong></p>
+        <p>BML - <span id="bankAccount">7xxxxxxxxxxxxx</span> (KIN Ferry Service)</p>
+        <button id="copyButton" style="padding: 5px 10px; background-color: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 14px;">Copy Account Number</button>
+    </div>
+    <script>
+        document.getElementById('copyButton').addEventListener('click', () => {
+            const bankAccount = document.getElementById('bankAccount').textContent;
+            navigator.clipboard.writeText(bankAccount).then(() => {
+                alert('Bank account number copied to clipboard.');
+            }).catch(err => {
+                console.error('Failed to copy bank account number: ', err);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const seatSelect = document.getElementById('seat');
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            const takenSeats = tickets.map(ticket => parseInt(ticket.seat, 10));
+
+            for (let i = 1; i <= 60; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `Seat ${i} ${takenSeats.includes(i) ? '(Taken)' : '(Available)'}`;
+                option.disabled = takenSeats.includes(i);
+                seatSelect.appendChild(option);
+            }
+        });
+
+        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            const seatNumber = parseInt(data.seat, 10);
+            const feedback = document.getElementById('feedback');
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            const takenSeats = tickets.map(ticket => parseInt(ticket.seat, 10));
+
+            if (seatNumber < 1 || seatNumber > 60) {
+                feedback.textContent = 'Seat number must be between 1 and 60.';
+                return;
+            }
+
+            if (takenSeats.includes(seatNumber)) {
+                feedback.textContent = 'This seat is already taken. Please choose another seat.';
+                return;
+            }
+
+            const receiptFile = formData.get('receipt');
+            if (!receiptFile) {
+                feedback.textContent = 'Please upload a receipt.';
+                return;
+            }
+
+            // Handle receipt upload (this is a placeholder, actual implementation may vary)
+            const receiptUrl = await uploadReceipt(receiptFile);
+            if (!receiptUrl) {
+                feedback.textContent = 'Failed to upload receipt. Please try again.';
+                return;
+            }
+
+            formData.set('receipt', receiptUrl);
+
+            // Generate unique ticket code
+            const ticketCode = `#${String(tickets.length + 1).padStart(7, '0')}`;
+
+            // Save ticket details to localStorage
+            tickets.push({
+                code: ticketCode,
+                name: data.name,
+                phone: `+960${data.phone}`,
+                idCard: data.idCard,
+                seat: data.seat,
+                route: data.route,
+                departure: data.departure,
+                jetty: data.jetty,
+                receipt: receiptUrl
+            });
+            localStorage.setItem('tickets', JSON.stringify(tickets));
+
+            const queryString = new URLSearchParams(formData).toString();
+            window.location.href = `ticket.html?${queryString}&code=${ticketCode}`;
+        });
+
+        async function uploadReceipt(file) {
+            // Placeholder function for uploading the receipt
+            // Replace with actual upload logic
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(URL.createObjectURL(file));
+                }, 1000);
+            });
+        }
+
+        let clickCount = 0;
+
+        document.addEventListener('click', (event) => {
+            const { clientX, clientY } = event;
+            const { innerWidth, innerHeight } = window;
+
+            // Check if the click is in the top-right corner (10% of the width and height)
+            if (clientX > innerWidth * 0.9 && clientY < innerHeight * 0.1) {
+                clickCount++;
+                if (clickCount === 5) {
+                    const password = prompt('Enter the admin password:');
+                    if (password === 'Whatever@KIN') {
+                        window.location.href = 'admin.html';
+                    } else {
+                        alert('Incorrect password.');
+                    }
+                    clickCount = 0; // Reset click count after prompt
+                }
+            }
+        });
+    </script>
+</body>
+</html>
